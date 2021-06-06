@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\View;
+
+use App\Http\Requests\StoreChecklistGroupRequest;
+use App\Http\Requests\UpdateChecklistGroupRequest;
+use App\Models\ChecklistGroup;
+
+class ChecklistGroupController extends Controller
+{
+    public function create(): View
+    {
+        return view('admin.checklist_groups.create');
+    }
+
+    public function store(StoreChecklistGroupRequest $request): RedirectResponse
+    {
+        ChecklistGroup::create($request->validated());
+
+        return redirect()->route('home');
+    }
+
+    public function edit(ChecklistGroup $checklistGroup): View
+    {
+        return view ('admin.checklist_groups.edit', compact('checklistGroup'));
+    }
+
+    public function update(UpdateChecklistGroupRequest $request, ChecklistGroup $checklistGroup): RedirectResponse
+    {
+        $checklistGroup->update($request->validated());
+        return redirect()->route('home');
+    }
+
+    public function destroy(ChecklistGroup $checklistGroup): RedirectResponse
+    {
+        $checklistGroup->delete();
+        return redirect()->route('home');
+    }
+}
