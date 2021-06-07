@@ -30,7 +30,7 @@
 
                                 <div class="form-group">
                                     <label for="description">{{ __('Description') }}</label>
-                                    <textarea class="form-control" name="description" rows="5" id="checklist-textarea">{{ $task->description }}</textarea>
+                                    <textarea class="form-control" name="description" rows="5" id="textarea">{{ $task->description }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -52,11 +52,6 @@
 @endsection
 
 @section('scripts')
-<script>
-    ClassicEditor
-        .create( document.querySelector( '#checklist-textarea' ) )
-        .catch( error => {
-            console.error( error );
-        } );
-</script>
+@include('admin.ckeditor')
 @endsection
+
