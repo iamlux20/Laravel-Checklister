@@ -1,9 +1,9 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
-
 <script>
-
     class MyUploadAdapter {
         constructor( loader ) {
+            // The file loader instance to use during the upload. It sounds scary but do not
+            // worry — the loader will be passed into the adapter later on in this guide.
             this.loader = loader;
         }
 
@@ -24,6 +24,7 @@
             }
         }
 
+        // Initializes the XMLHttpRequest object using the URL passed to the constructor.
         _initRequest() {
             const xhr = this.xhr = new XMLHttpRequest();
 
@@ -36,6 +37,7 @@
             xhr.responseType = 'json';
         }
 
+        // Initializes XMLHttpRequest listeners.
         _initListeners( resolve, reject, file ) {
             const xhr = this.xhr;
             const loader = this.loader;
@@ -78,6 +80,7 @@
             }
         }
 
+        // Prepares the data and sends the request.
         _sendRequest( file ) {
             // Prepare the form data.
             const data = new FormData();
@@ -104,7 +107,7 @@
     }
 
     ClassicEditor
-        .create( document.querySelector( '#textarea' ), {
+        .create( document.querySelector( '#task-textarea' ), {
             extraPlugins: [ SimpleUploadAdapterPlugin ],
         } )
         .catch( error => {
