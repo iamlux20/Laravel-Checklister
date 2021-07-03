@@ -50,16 +50,16 @@
 
 
         <li class="c-sidebar-nav-title">{{ __('Pages') }}</li>
-        @foreach(\App\Models\Page::all() as $page)
-        <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
-            <a class="c-sidebar-nav-link" href="{{ route('admin.pages.edit', $page) }}">
-                <svg class="c-sidebar-nav-icon">
-                <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-puzzle') }}"></use>
-                </svg>
-                {{ $page->title }}
-            </a>
-        </li>
-        @endforeach
+            @foreach(\App\Models\Page::all() as $page)
+            <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-link" href="{{ route('admin.pages.edit', $page) }}">
+                    <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-puzzle') }}"></use>
+                    </svg>
+                    {{ $page->title }}
+                </a>
+            </li>
+            @endforeach
 
         <li class="c-sidebar-nav-title">{{ __('Manage Data') }}</li>
 
@@ -73,36 +73,59 @@
         </li>
 
         @else
-            @foreach($user_menu as $group)
-
-            <li class="c-sidebar-nav-title">
-                {{ $group['name'] }}
-                @if($group['is_new'])
-                <span class="badge badge-info">NEW</span>
-                @elseif($group['is_updated'])
-                <span class="badge badge-info">UPD</span>
-                @endif
-            </li>
-            @foreach($group['checklists'] as $checklist)
+            @foreach($user_tasks_menu as $key => $user_task_menu)
             <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="{{ route('user.checklist.show', [$checklist['id']]) }}">
+                <a href="#" class="c-sidebar-nav-link">
                     <svg class="c-sidebar-nav-icon">
-                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-list') }}"></use>
-                    </svg> {{ $checklist['name'] }}
-
-                    @if($checklist['is_new'])
-                    <span class="badge badge-info">NEW</span>
-                    @elseif($checklist['is_updated'])
-                    <span class="badge badge-info">UPD</span>
-                    @endif
+                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-'.$user_task_menu['icon']) }}"></use>
+                    </svg>
+                    {{ $user_task_menu['name'] }}
+                    @livewire('user-tasks-counter', [
+                        'task_type' => $key,
+                        'tasks_count' => $user_task_menu['tasks_count']
+                    ])
                 </a>
             </li>
-        @endforeach
+            @endforeach
+
+            @foreach($user_menu as $group)
+
+                <li class="c-sidebar-nav-title">
+                    {{ $group['name'] }}
+                    @if($group['is_new'])
+                    <span class="badge badge-info">NEW</span>
+                    @elseif($group['is_updated'])
+                    <span class="badge badge-info">UPD</span>
+                    @endif
+                </li>
+
+                @foreach($group['checklists'] as $checklist)
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('user.checklist.show', [$checklist['id']]) }}">
+                        <svg class="c-sidebar-nav-icon">
+                            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-list') }}"></use>
+                        </svg> {{ $checklist['name'] }}
+
+                        @livewire('completed-tasks-counter', [
+                            'completed_tasks' => count($checklist['user_completed_tasks']),
+                            'tasks_count' => count($checklist['tasks']),
+                            'checklist_id' => $checklist['id']
+                        ])
+
+                        @if($checklist['is_new'])
+                            <span class="badge badge-info">NEW</span>
+                        @elseif($checklist['is_updated'])
+                            <span class="badge badge-info">UPD</span>
+                        @endif
+                    </a>
+                </li>
+                @endforeach
 
             @endforeach
         @endif
 
     </ul>
+
 
         <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
 </div>
