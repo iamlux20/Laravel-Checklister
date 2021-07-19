@@ -17,4 +17,9 @@ class ChecklistController extends Controller
 
         return view('user.checklist.show', compact('checklist'));
     }
+
+    public function tasklist($list_type)
+    {
+        return view('user.checklist.tasklist', compact('list_type'));
+    }
 }
