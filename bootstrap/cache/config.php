@@ -476,11 +476,11 @@
       'smtp' => 
       array (
         'transport' => 'smtp',
-        'host' => 'mailhog',
-        'port' => '1025',
-        'encryption' => NULL,
-        'username' => NULL,
-        'password' => NULL,
+        'host' => 'smtp.mailtrap.io',
+        'port' => '2525',
+        'encryption' => 'tls',
+        'username' => '1362dbad3cc11e',
+        'password' => 'c4f8463ded8dd0',
         'timeout' => NULL,
         'auth_mode' => NULL,
       ),
@@ -513,8 +513,8 @@
     ),
     'from' => 
     array (
-      'address' => NULL,
-      'name' => 'Laravel',
+      'address' => 'hello@example.com',
+      'name' => 'Example',
     ),
     'markdown' => 
     array (
